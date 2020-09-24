@@ -10,8 +10,7 @@ window.onload = function(){
 		let calSqrt = document.getElementsByClassName('.calculator_sqrt');
 
     // INIT CALC KEYS
-    calcKeys.forEach = function () {
-  button.addEventListener("click", () => {
+    calcKeys.addEventListener("click", () => {
 
       if(calculator.previousOperand === "" &&
       calculator.currentOperand !== "" &&
@@ -19,8 +18,7 @@ window.onload = function(){
           calculator.currentOperand = "";
           calculator.readyToReset = false;
       }
-  })
-};
+  });
 
     // ADD NUMBERS TO INPUT
     calcButton.onclick = function () {
