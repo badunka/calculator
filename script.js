@@ -1,51 +1,132 @@
 window.onload = function(){
-    let calc = document.getElementsByClassName('.calculator');
-    let calcDisplay = document.getElementsByClassName('.calculator__display');
-    let calcKeys = document.getElementsByClassName('.calculator__key');
-    let calcButton = document.getElementsByClassName('.calculator__button');
-    let calcClear = document.getElementsByClassName('.calculator__clear');
-    let calcEqual = document.getElementsByClassName('.calculator__key--equal');
-    let calcPower = document.getElementsByClassName('.calculator__power');
-    let calcSpace = document.getElementsByClassName('.calculator__backspace');
-		let calSqrt = document.getElementsByClassName('.calculator_sqrt');
+    const display = document.getElementById('display');
+    const numbers = document.querySelectorAll('.calcButton');
+    const operations = document.querySelectorAll('.operator');
+    const clearButtons = document.querySelectorAll('.clear-btn');
+    const acBtn = document.getElementById('AC')
+    const delBtn = document.getElementById('DEL')
+    const calcEqual = document.getElementById('equal');
+    const decimalBtn = document.getElementById('decimal');
+    const calcPower = document.getElementById('power');
+    const calcSqrt = document.getElementById('sqrt');
+    let MemoryCurrentNumber = 0;
+    let MemoryNewNumber = false;
+    let MemoryPendingOperation = '';
 
-    // INIT CALC KEYS
-    calcKeys.addEventListener("click", () => {
+  for (let i = 0; i < numbers.length; i++) {
+    let number = numbers[i];
+    number.addEventListener('click', function (e) {
+      numberPress(e.target.textContent);
+    });
+  }
 
-      if(calculator.previousOperand === "" &&
-      calculator.currentOperand !== "" &&
-  calculator.readyToReset) {
-          calculator.currentOperand = "";
-          calculator.readyToReset = false;
+  for (let i = 0; i < operations.length; i++) {
+    let operationBtn = operations[i];
+    operationBtn.addEventListener('click', function (e) {
+      operationPress(e.target.textContent);
+    });
+  }
+
+  for (let i = 0; i < clearButtons.length; i++) {
+    let clearBtn = clearButtons[i];
+    clearBtn.addEventListener('click', function (e) {
+      clear(e.target.textContent);
+    });
+  }
+
+  function numberPress(number) {
+    if (MemoryNewNumber) {
+      display.value = number;
+      MemoryNewNumber = false;
+    } else {
+      if (display.value === '0') {
+        display.value = number;
+      } else {
+        display.value += number;
       }
-  });
+    }
+  }
 
-    // ADD NUMBERS TO INPUT
-    calcButton.onclick = function () {
-        calcDisplay.val( calcDisplay.val() + $(this).attr('value') );
+  function operationPress (op) {
+    let localOperationMemory = display.value;
+    if (MemoryNewNumber && MemoryPendingOperation !== '=') {
+      display.value = MemoryCurrentNumber
+      } else {
+        MemoryNewNumber = true;
+        if (MemoryPendingOperation === '+' ) {
+        MemoryCurrentNumber += parseFloat (localOperationMemory);
+        } else if( MemoryPendingOperation === '-') {
+        MemoryCurrentNumber -= parseFloat(localOperationMemory);
+        } else if (MemoryPendingOperation === '*') {
+        MemoryCurrentNumber *= parseFloat (localOperationMemory);
+        MemoryCurrentNumber.toFixed(2)
+        } else if (MemoryPendingOperation === "/") {
+        MemoryCurrentNumber /= parseFloat (localOperationMemory);
+        MemoryCurrentNumber.toFixed(2)
+        } else if (MemoryPendingOperation === "x²") {
+        MemoryCurrentNumber = parseFloat(localOperationMemory);
+        MemoryCurrentNumber.toFixed(2)
+      } else if (MemoryPendingOperation === "&radic;") {
+        MemoryCurrentNumber = parseFloat(localOperationMemory);
+        MemoryCurrentNumber.toFixed(2)
+        } else {
+        MemoryCurrentNumber = parseFloat(localOperationMemory);
+        };
+        display.value = MemoryCurrentNumber
+        MemoryPendingOperation = op;
+        if( (MemoryCurrentNumber).toString().indexOf('.') != -1 )
+            MemoryCurrentNumber = parseFloat((MemoryCurrentNumber).toFixed(2));
+        display.value = MemoryCurrentNumber;
+      };
     };
 
-    // CLEAR INPUT
-    calcClear.onclick = function () {
-        calcDisplay.val('');
-    };
 
-    // SHOW RESULT
-    calcEqual.onclick = function () {
-        calcDisplay.val( eval( calcDisplay.val() ) );
-    };
+  function decimal(argument) {
+    let localDecimalMemory = display.value;
 
-    // POWER BUTTON
-    calcPower.onclick = function () {
-        calcDisplay.val( Math.pow( calcDisplay.val(), 2 ) );
-    };
+    if (MemoryNewNumber) {
+      localDecimalMemory = '0.';
+      MemoryNewNumber = false;
+    } else {
+      if (localDecimalMemory.indexOf('.') === -1) {
+        localDecimalMemory += '.';
+      }
+    }
+    display.value = localDecimalMemory;
+  }
 
-	   calSqrt.onclick = function () {
-        calcDisplay.val( Math.sqrt( calcDisplay.val()) );
-    };
+  function clear() {
+    display.value = '0';
+  }
 
-    // BACKSPACE BUTTON
-    calcSpace.onclick = function () { // https://www.w3schools.com/jsref/jsref_substring.asp
-        calcDisplay.val( calcDisplay.val().slice(0,-1) );
-    };
+  function del() {
+    MemoryCurrentNumber = display.value;
+    display.value = MemoryCurrentNumber.slice(0, -1);
+    if (display.value === '') {
+      display.value = '0';
+    }
+  }
+
+  function sqrt() {
+    display.value = MemoryCurrentNumber;
+    if(MemoryCurrentNumber > 0){
+      MemoryNewNumber = true;
+      MemoryCurrentNumber.toFixed(2)
+      return  MemoryCurrentNumber = Math.sqrt(MemoryCurrentNumber)
+    } else {
+        return display.value = "Недопустимое действие!"
+    }
+  };
+
+  function poweer() {
+    display.value = MemoryCurrentNumber;
+    MemoryNewNumber = true
+    return MemoryCurrentNumber = Math.pow( MemoryCurrentNumber, 2 );
+  };
+
+  calcSqrt.addEventListener("click", sqrt);
+  calcPower.addEventListener("click", poweer);
+  decimalBtn.addEventListener('click', decimal);
+  delBtn.addEventListener('click', del);
+  acBtn.addEventListener('click',clear);
 }

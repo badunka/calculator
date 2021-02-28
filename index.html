@@ -7,47 +7,48 @@
     <script src="script.js" type="text/javascript"></script>
   </head>
   <body>
-
+<div class="blocks">
   <div class="calculator">
 
-  		<div class="calculator__form">
+  		<div class="form">
 
-  				<div class="calculator__row">
-  						<input class="calculator__display" id="display" type="text">
+  				<div class="row">
+  					<input disabled class="calcDisplay" id="display" value="0" name="" placeholder="000000000000000000" type="text">
   				</div>
-  				<div class="calculator__row">
-  						<button class="calculator__key calculator__clear">AC</button>
-  						<button class="calculator__key calculator__backspace">DEL</button>
-  						<button class="calculator__key calculator__power">X &sup2;</button>
-              <button class="calculator__key calculator_sqrt">&radic;</button>
+  				<div class="row">
+  					<button class="key operator" id="power">x²</button>
+              		<button class="key operator" id="sqrt">&radic;</button>
+			  		<button class="key clear-btn" id ="AC" >AC</button>
+  					<button class="key" id="DEL">DEL</button>
   				</div>
-  				<div class="calculator__row">
-  						<button class="calculator__key calculator__button">9</button>
-  						<button class="calculator__key calculator__button">8</button>
-  						<button class="calculator__key calculator__button">7</button>
-  						<button class="calculator__key calculator__button">+</button>
+  				<div class="row">
+  					<button class="key calcButton">7</button>
+  					<button class="key calcButton">8</button>
+  					<button class="key calcButton">9</button>
+					<button class="key operator" id="plus">+</button>
   				</div>
-  				<div class="calculator__row">
-  						<button class="calculator__key calculator__button">6</button>
-  						<button class="calculator__key calculator__button">5</button>
-  						<button class="calculator__key calculator__button">4</button>
-  						<button class="calculator__key calculator__button">-</button>
-  				</div>
-
-  				<div class="calculator__row">
-  						<button class="calculator__key calculator__button">3</button>
-  						<button class="calculator__key calculator__button">2</button>
-  						<button class="calculator__key calculator__button">1</button>
-  						<button class="calculator__key calculator__button"> &times;</button>
+  				<div class="row">
+  					<button class="key calcButton">4</button>
+  					<button class="key calcButton">5</button>
+  					<button class="key calcButton">6</button>
+  					<button class="key operator" id="minus">-</button>
   				</div>
 
-  				<div class="calculator__row">
-              <button class="calculator__key calculator__button">.</button>
-  						<button class="calculator__key calculator__button">0</button>
-  						<button class="calculator__key calculator__key--equal">=</button>
-              <button class="calculator__key calculator__button">&divide;</button>
-          </div>
+  				<div class="row">
+  					<button class="key calcButton">1</button>
+  					<button class="key calcButton">2</button>
+  					<button class="key calcButton">3</button>
+  					<button class="key operator" id="multiplication">*</button>
+  				</div>
+
+  				<div class="row">
+              		<button class="key calcButton" id="decimal">.</button>
+  					<button class="key calcButton">0</button>
+					<button class="key operator" id="equal">=</button>
+              		<button class="key operator" id="division">/</button>
+         		</div>
+  			</div>
   		</div>
-  </div>
+	</div>
   </body>
 </html>
